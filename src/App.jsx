@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Expenses from './pages/Expenses'
 import { Toaster } from 'react-hot-toast'
 import CreateExpense from './components/CreateExpense'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -12,17 +13,23 @@ const router = createBrowserRouter([
     element: <LoginForm />
   },
   {
-    path: "/",
-    element: <Home />
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/create-expense",
+        element: <CreateExpense />
+      },
+      {
+        path: "/expenses",
+        element: <Expenses />
+      }
+    ]
   },
-  {
-    path: "/create-expense",
-    element: <CreateExpense />
-  },
-  {
-    path: "/expenses",
-    element: <Expenses />
-  }
+
 ]);
 
 const App = () => {
