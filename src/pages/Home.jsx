@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Plus, ArrowRight } from 'lucide-react';
+import { Plus, ArrowRight, LogOut } from 'lucide-react';
 import ExpenseTile from '../components/ExpenseTile.jsx';
 import { useExpenses } from '../hooks/useExpenses.js';
+import useAuth from '../hooks/useAuth.js';
 
 const Home = () => {
   const { expenses, isLoading } = useExpenses();
+  const { handleLogout } = useAuth();
 
   const recentExpenses = expenses.slice(0, 6);
   let totalSpent = expenses.reduce((acc, { amount }) => {
@@ -70,6 +72,12 @@ const Home = () => {
           Add Expense
         </Link>
 
+        <button
+          onClick={handleLogout}
+          type='button'
+          className='absolute bottom-2 right-2 p-3 rounded-full bg-red-500/30 text-red-500/70'>
+          <LogOut size={20} />
+        </button>
       </div>
     </main>
   );

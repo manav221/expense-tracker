@@ -13,3 +13,17 @@ export async function signIn({ email, password }) {
         return { success: false, error: "An unexpected error occurred." };
     }
 }
+
+export async function signOut() {
+    try {
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+            return { success: false, error: error.message };
+        }
+
+        return { success: true }
+    } catch (error) {
+        return { success: false, error: "Unexpected Error Occurred." }
+    }
+}

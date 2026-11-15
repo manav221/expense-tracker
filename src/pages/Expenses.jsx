@@ -1,6 +1,6 @@
 import ExpenseTile from '../components/ExpenseTile';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { Plus, FileChartColumn, Download } from 'lucide-react';
 import { useExpenses } from '../hooks/useExpenses';
 
 const Expenses = () => {
@@ -8,6 +8,17 @@ const Expenses = () => {
 
   return (
     <div className='w-full h-screen overflow-y-auto'>
+
+      <div className='w-full flex justify-end p-2 gap-2'>
+        <button className='flex items-center gap-1.5 px-2 p-1.5 bg-neutral-200 rounded-lg font-semibold text-gray-700'>
+          <FileChartColumn size={25} />
+        </button>
+
+        <button className='flex items-center gap-1.5 px-2 p-1.5 bg-neutral-200 rounded-lg font-semibold text-gray-700'>
+          <Download size={25} />
+        </button>
+      </div>
+
       {error && (
         <div className="p-4 mb-4 rounded-xl bg-red-50 border border-red-200">
           <p className="text-sm text-red-600 text-center">{error}</p>

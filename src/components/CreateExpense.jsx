@@ -75,7 +75,7 @@ const CreateExpense = () => {
                         {/* Amount Input */}
                         <div className='flex flex-col gap-2'>
                             <div className='flex items-center justify-between '>
-                                <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Amount ($)</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Amount (₹)</label>
                                 <button
                                     type='button'
                                     onClick={changePaymentMode}

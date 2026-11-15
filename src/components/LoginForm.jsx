@@ -1,39 +1,8 @@
-import React, { useState } from 'react'
-import { signIn } from '../services/authService';
-import { useNavigate } from 'react-router-dom';
-
+import useAuth from '../hooks/useAuth';
 
 const LoginForm = () => {
-    const [authCredentials, setAuthCredentials] = useState({ email: "", password: "" })
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        if (error) {
-            setError(null);
-        }
-        const { name, value } = e.target;
-        setAuthCredentials(prev => ({ ...prev, [name]: value }));
-    }
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError(null);
-
-        setIsLoading(true);
-
-        const result = await signIn(authCredentials);
-
-        if (!result.success) {
-            setError(result.error);
-            setIsLoading(false);
-            return;
-        }
-        
-        setIsLoading(false);
-        navigate("/");
-    }
+    const { authCredentials, error, isLoading, handleChange, handleLogin, navigate } = useAuth();
+    
     return (
         <div className="min-h-screen block md:flex items-center justify-center bg-gray-50 md:px-4 lg:px-8">
 
