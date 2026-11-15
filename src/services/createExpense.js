@@ -22,6 +22,7 @@ export async function createExpense({ amount, category, description, paymentMode
         if (authError || !user) {
             return { success: false, error: "Log In first." };
         }
+        
         const { data, error } = await supabase.from("expenses").insert([
             {
                 amount: numericAmount,

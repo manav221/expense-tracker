@@ -39,7 +39,7 @@ const CreateExpense = () => {
             setIsCreating(false);
             return;
         }
-
+        
         setIsCreating(false);
         toast("Expense created successfully");
         navigate("/");

@@ -1,31 +1,10 @@
-import { useEffect, useState } from 'react'
-import { fetchExpenses } from '../services/expensesService';
 import ExpenseTile from '../components/ExpenseTile';
 import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { useExpenses } from '../hooks/useExpenses';
 
 const Expenses = () => {
-  const [expenses, setExpenses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const getAllExpenses = async () => {
-    setError(null);
-    setIsLoading(true);
-
-    const result = await fetchExpenses();
-    if (!result.success) {
-      setIsLoading(false);
-      return setError(result.error);
-    }
-
-    setExpenses(result.data);
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    getAllExpenses();
-  }, []);
+  const { expenses, isLoading, error, getAllExpenses } = useExpenses();
 
   return (
     <div className='w-full h-screen overflow-y-auto'>
@@ -43,14 +22,14 @@ const Expenses = () => {
 
       <div className="flex flex-col">
         {isLoading ? (
-          // 1. Skeleton Loading State
+          // Skeleton Loading State
           <div className="flex flex-col gap-3">
             {[1, 2, 3, 4].map((n) => (
               <div key={n} className="h-19 w-full bg-gray-200 rounded-2xl animate-pulse"></div>
             ))}
           </div>
         ) : expenses.length > 0 ? (
-          // 2. Data Loaded State
+          // Data Loaded State
           expenses.map((expense) => (
             <ExpenseTile
               key={expense.id}
@@ -61,7 +40,7 @@ const Expenses = () => {
             />
           ))
         ) : (
-          // 3. Empty State
+          // Empty State
           <div className="flex flex-col items-center justify-center h-[50vh] text-center">
             <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <span className="text-4xl">💸</span>

@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Plus, ArrowRight } from 'lucide-react';
+import ExpenseTile from '../components/ExpenseTile.jsx';
+import { useExpenses } from '../hooks/useExpenses.js';
 
 const Home = () => {
+  const { expenses, isLoading } = useExpenses();
 
-  const recentExpenses = [];
-  const totalSpent = 0;
+  const recentExpenses = expenses.slice(0, 6);
+  let totalSpent = expenses.reduce((acc, { amount }) => {
+    return acc + amount;
+  }, 0);
+
 
   return (
     <main className="min-h-screen bg-gray-50 pb-24">
@@ -15,7 +21,12 @@ const Home = () => {
         <div className="bg-black text-white rounded-2xl p-6 shadow-md mb-8">
           <p className="text-sm font-medium text-gray-400 mb-1">Total Spent</p>
           <h2 className="text-3xl font-bold tracking-tight">
-            ${totalSpent.toFixed(2)}
+            {
+              isLoading ? (
+                <div className='w-fit px-18 py-5 rounded-lg bg-white/15 animate-pulse'></div>
+              ) :
+                `₹${totalSpent.toFixed(2)}`
+            }
           </h2>
         </div>
 
@@ -34,14 +45,20 @@ const Home = () => {
         <div className="flex flex-col gap-3">
           {recentExpenses.length > 0 ? (
             recentExpenses.slice(0, 3).map((expense) => (
-              <ExpenseTile key={expense.id} {...expense} />
+              <ExpenseTile key={expense.id}
+                amount={expense.amount}
+                category={expense.category}
+                desc={expense.description}
+                paymentMode={expense.payment_mode}
+              />
             ))
-          ) : (
-            /* Minimal Empty State */
-            <div className="flex flex-col items-center justify-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <p className="text-gray-400 text-sm italic">No recent expenses</p>
-            </div>
-          )}
+          ) :
+            (
+              /* Minimal Empty State */
+              <div className="flex flex-col items-center justify-center py-12 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                <p className="text-gray-400 text-sm italic">{isLoading ? "Loading..." : "No recent expenses"}</p>
+              </div>
+            )}
         </div>
 
         {/* Primary Action Button */}

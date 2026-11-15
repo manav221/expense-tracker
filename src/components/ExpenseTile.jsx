@@ -1,4 +1,3 @@
-import React from 'react';
 import { CATEGORY_ICON } from "../constant/app.constant";
 import { Pencil, Trash2 } from 'lucide-react';
 // Note: Trash2 often looks a bit cleaner than the default Trash icon
